@@ -11,7 +11,7 @@ public class ClientBeans {
 
     @Bean
     public ProductsRestClientImpl productsRestClient(
-            @Value ("${storeApp.services.catalogue.uri:http://localhost:8081}") String catalogueBaseUri) {
+            @Value("${storeApp.services.catalogue.uri:http://localhost:8081}") String catalogueBaseUri) {
         return new ProductsRestClientImpl(RestClient.builder()
                 .baseUrl(catalogueBaseUri)
                 .build());

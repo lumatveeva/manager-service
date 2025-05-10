@@ -13,7 +13,7 @@ public interface ProductsRestClient {
 
     Product createProduct(String title, String details);
 
-    void updateProduct(int productId,String title, String details);
+    void updateProduct(int productId, String title, String details);
 
     void deleteProduct(int productId);
 }

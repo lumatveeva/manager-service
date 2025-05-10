@@ -5,7 +5,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClient;
 import ru.lumat.managerservice.entity.Product;
 import ru.lumat.managerservice.exception.BadRequestException;
@@ -77,14 +76,14 @@ public class ProductsRestClientImpl implements ProductsRestClient {
 
     @Override
     public void deleteProduct(int productId) {
-       try{
-           restClient
-                   .delete()
-                   .uri("catalogue-api/products/%d".formatted(productId))
-                   .retrieve()
-                   .toBodilessEntity();
-       } catch (HttpClientErrorException.NotFound exception){
-           throw new NoSuchElementException(exception.getMessage());
-       }
+        try {
+            restClient
+                    .delete()
+                    .uri("catalogue-api/products/%d".formatted(productId))
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (HttpClientErrorException.NotFound exception) {
+            throw new NoSuchElementException(exception.getMessage());
+        }
     }
 }

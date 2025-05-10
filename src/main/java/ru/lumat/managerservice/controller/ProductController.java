@@ -6,11 +6,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import ru.lumat.managerservice.clients.ProductsRestClient;
 import ru.lumat.managerservice.entity.Product;
+import ru.lumat.managerservice.exception.BadRequestException;
 import ru.lumat.managerservice.payload.UpdateProductPayload;
 
 import java.util.Locale;
@@ -41,18 +40,15 @@ public class ProductController {
 
     @PostMapping("edit")
     public String updateProduct(@ModelAttribute(name = "product", binding = false) Product product,
-                                @RequestBody UpdateProductPayload payload,
-                                BindingResult bindingResult,
+                               UpdateProductPayload payload,
                                 Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("payload", payload);
-            model.addAttribute("errors", bindingResult.getAllErrors().stream()
-                    .map(ObjectError::getDefaultMessage)
-                    .toList());
-            return "catalogue/products/edit";
-        } else {
+        try {
             this.client.updateProduct(product.id(), payload.title(), payload.details());
             return "redirect:/catalogue/products/%d".formatted(product.id());
+        } catch (BadRequestException exception) {
+            model.addAttribute("payload", payload);
+            model.addAttribute("errors", exception.getErrors());
+            return "catalogue/products/edit";
         }
     }
 

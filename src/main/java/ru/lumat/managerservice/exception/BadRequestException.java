@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class BadRequestException extends RuntimeException{
+public class BadRequestException extends RuntimeException {
     private List<String> errors;
 
     public BadRequestException(List<String> errors) {

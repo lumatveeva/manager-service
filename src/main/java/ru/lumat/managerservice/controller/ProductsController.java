@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.lumat.managerservice.clients.ProductsRestClient;
 import ru.lumat.managerservice.entity.Product;
@@ -31,7 +32,7 @@ public class ProductsController {
     }
 
     @PostMapping("/create")
-    public String createProduct(NewProductPayload payload,
+    public String createProduct(@RequestBody NewProductPayload payload,
                                 BindingResult bindingResult,
                                 Model model) {
         if (bindingResult.hasErrors()) {

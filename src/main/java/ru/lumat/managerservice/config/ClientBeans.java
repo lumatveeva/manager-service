@@ -1,4 +1,4 @@
-package ru.lumat.managerservice.confi;
+package ru.lumat.managerservice.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

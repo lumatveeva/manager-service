@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.lumat.managerservice.clients.ProductsRestClient;
 import ru.lumat.managerservice.entity.Product;
 import ru.lumat.managerservice.exception.BadRequestException;
@@ -19,8 +20,10 @@ public class ProductsController {
     private final ProductsRestClient client;
 
     @GetMapping("list")
-    public String getProductsList(Model model) {
-        model.addAttribute("products", client.findAllProducts());
+    public String getProductsList(@RequestParam(name = "filter", required = false) String filter,
+                                  Model model) {
+        model.addAttribute("products", client.findAllProducts(filter));
+        model.addAttribute("filter", filter);
         return "catalogue/products/list";
     }
 
